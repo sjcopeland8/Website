@@ -1,0 +1,27 @@
+{
+  "articles": [
+    {
+      "path": "about.html",
+      "title": "About this site",
+      "description": "Some additional details about the website",
+      "author": [],
+      "contents": "\n\n\n\n",
+      "last_modified": "2022-01-23T17:24:53-08:00"
+    },
+    {
+      "path": "blog.html",
+      "title": "Blog",
+      "author": [],
+      "contents": "\n\n\n\n",
+      "last_modified": "2022-01-23T17:44:06-08:00"
+    },
+    {
+      "path": "index.html",
+      "title": "Steph Copeland",
+      "author": [],
+      "contents": "\n\n          \n          \n          Steph C.\n          \n          \n          Home\n          About\n          Blog\n          ☰\n          \n          \n      \n        \n          \n            Steph Copeland\n          \n          \n            \n              I am a graduate student in the Ecology, Evolution, and Marine Biology Department (Young Lab) at the University of California Santa Barbara. I am currently interested in understanding anthropogenic impacts to landscapes and the subsequent responses of vectors and vector-borne diseases to these disturbances. I am originally from Wilmington, Delaware. In my spare time I enjoy surfing, cycling, and walking my dog, Hugo.\n            \n            \n              I am a graduate student in the Ecology, Evolution, and Marine Biology Department (Young Lab) at the University of California Santa Barbara. I am currently interested in understanding anthropogenic impacts to landscapes and the subsequent responses of vectors and vector-borne diseases to these disturbances. I am originally from Wilmington, Delaware. In my spare time I enjoy surfing, cycling, and walking my dog, Hugo.\n            \n          \n\n          \n            \n              \n                  \n                    \n                      GitHub\n                    \n                  \n                \n                                \n                  \n                    \n                      Email\n                    \n                  \n                \n                              \n          \n\n          \n            \n              \n                                \n                  \n                    GitHub\n                  \n                \n                                \n                  \n                    Email\n                  \n                \n                              \n            \n          \n        \n      \n    \n\n    \n    \n    ",
+      "last_modified": "2022-01-23T17:56:32-08:00"
+    }
+  ],
+  "collections": ["posts/posts.json"]
+}
