@@ -1,7 +1,7 @@
 ---
-title: "welcome"
+title: "Niche?"
 description: |
-  A short description of the post.
+  How does one pronounce "Niche"?
 author:
   - name: Stephanie Copeland
 date: 2022-01-23
@@ -15,8 +15,6 @@ output:
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-Distill is a publication format for scientific and technical writing, native to the web.
-
-Learn more about using Distill at <https://rstudio.github.io/distill>.
+This has been a question plaguing the EEMB first-year cohort. EEMB 509 - Introduction to Principles of Ecology and Evolution is where the topic at hand developed. The astutely observant first-years noticed the pronunciation of said "Niche" had created its own "Niches" So is it pronounced "Neech" or "Nitch"? 
 
 

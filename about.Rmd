@@ -1,10 +1,19 @@
 ---
-title: "About this site"
-description: |
-  Some additional details about the website
+title: "About Me"
+  
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 ```
+
+CV (somehow get the pdf linked here)
+
+### My Science
+
+
+### My Current Projects
+
+### Opportunities
+I am looking for 1-2 motivated undergraduates interested in independent research experience to join me on an approximately 6 week long field season this summer (2022). The field work will occur at several pairs of high alpine lakes. Each pair contains one lake artificially stocked with fish, the other is un-stocked (no fish). Research questions can take on a variety of different topics, as long as they are focused on this high alpine lake habitat. Please reach out to me via email if you're interested. 
 
