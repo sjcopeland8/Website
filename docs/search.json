@@ -4,22 +4,29 @@
       "path": "about.html",
       "title": "About Me",
       "author": [],
-      "contents": "\nCV (somehow get the pdf linked here)\nMy Science\nMy Current Projects\nOpportunities\nI am looking for 1-2 motivated undergraduates interested in independent research experience to join me on an approximately 6 week long field season this summer (2022). The field work will occur at several pairs of high alpine lakes. Each pair contains one lake artificially stocked with fish, the other is un-stocked (no fish). Research questions can take on a variety of different topics, as long as they are focused on this high alpine lake habitat. Please reach out to me via email if you’re interested.\n\n\n\n",
-      "last_modified": "2022-02-07T13:01:16-08:00"
+      "contents": "\n\n\n\nAbout Me\nMy Science\nTejon Ranch Exclosure Experiment\nSedgwick Reserve Prescribed Burn\nSierra Nevada Alpine Mosquito Project\nOpportunities\nI am looking for 1-2 motivated undergraduates interested in independent research experience to join me on an approximately 6 week long field season this summer (2022). The field work will occur at several pairs of high alpine lakes. Each pair contains one lake artificially stocked with fish, the other is un-stocked (no fish). Research questions can take on a variety of different topics, as long as they are focused on this high alpine lake habitat. Please reach out to me via email if you’re interested.\n\n\n\n",
+      "last_modified": "2022-02-22T16:57:24-08:00"
     },
     {
       "path": "blog.html",
       "title": "Blog",
       "author": [],
       "contents": "\n\n\n\n",
-      "last_modified": "2022-02-07T13:01:17-08:00"
+      "last_modified": "2022-02-22T16:57:25-08:00"
     },
     {
       "path": "index.html",
       "title": "Steph Copeland",
       "author": [],
-      "contents": "\n\n          \n          \n          Steph C.\n          \n          \n          Home\n          About\n          Blog\n          ☰\n          \n          \n      \n        \n          \n            Steph Copeland\n          \n          \n            \n              I am a graduate student in the Ecology, Evolution, and Marine Biology Department (Young Lab) at the University of California Santa Barbara. I am currently interested in understanding anthropogenic impacts to landscapes and the subsequent responses of vectors and vector-borne diseases to these disturbances. I am originally from Wilmington, Delaware. In my spare time I enjoy surfing, cycling, and walking my dog, Hugo.\n            \n            \n              I am a graduate student in the Ecology, Evolution, and Marine Biology Department (Young Lab) at the University of California Santa Barbara. I am currently interested in understanding anthropogenic impacts to landscapes and the subsequent responses of vectors and vector-borne diseases to these disturbances. I am originally from Wilmington, Delaware. In my spare time I enjoy surfing, cycling, and walking my dog, Hugo.\n            \n          \n\n          \n            \n              \n                  \n                    \n                      GitHub\n                    \n                  \n                \n                                \n                  \n                    \n                      Email\n                    \n                  \n                \n                              \n          \n\n          \n            \n              \n                                \n                  \n                    GitHub\n                  \n                \n                                \n                  \n                    Email\n                  \n                \n                              \n            \n          \n        \n      \n    \n\n    \n    \n    ",
-      "last_modified": "2022-02-07T13:01:17-08:00"
+      "contents": "\n\n          \n          \n          Steph C.\n          \n          \n          Home\n          About\n          Publications\n          Blog\n          ☰\n          \n          \n      \n        \n          \n            Steph Copeland\n          \n          \n            \n              I am a graduate student in the Ecology, Evolution, and Marine Biology Department (Young Lab) at the University of California Santa Barbara. I am currently interested in understanding anthropogenic impacts to landscapes and the subsequent responses of vectors and vector-borne diseases to these disturbances. I am originally from Wilmington, Delaware and received my B.S. from the University of New Hampshire. In my spare time I enjoy surfing, cycling, and walking my dog, Hugo.\n            \n            \n              I am a graduate student in the Ecology, Evolution, and Marine Biology Department (Young Lab) at the University of California Santa Barbara. I am currently interested in understanding anthropogenic impacts to landscapes and the subsequent responses of vectors and vector-borne diseases to these disturbances. I am originally from Wilmington, Delaware and received my B.S. from the University of New Hampshire. In my spare time I enjoy surfing, cycling, and walking my dog, Hugo.\n            \n          \n\n          \n            \n              \n                  \n                    \n                      GitHub\n                    \n                  \n                \n                                \n                  \n                    \n                      Email\n                    \n                  \n                \n                              \n          \n\n          \n            \n              \n                                \n                  \n                    GitHub\n                  \n                \n                                \n                  \n                    Email\n                  \n                \n                              \n            \n          \n        \n      \n    \n\n    \n    \n    ",
+      "last_modified": "2022-02-22T16:57:25-08:00"
+    },
+    {
+      "path": "pubs.html",
+      "title": "Publications",
+      "author": [],
+      "contents": "\n\n\n\n",
+      "last_modified": "2022-02-22T16:57:26-08:00"
     }
   ],
   "collections": ["posts/posts.json"]
