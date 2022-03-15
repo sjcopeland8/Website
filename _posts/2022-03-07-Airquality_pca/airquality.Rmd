@@ -1,0 +1,84 @@
+---
+title: "Air Quality Variable Correlation"
+description: |
+  Relatedness of Air Quality variables taken in NYC
+author:
+  - name: Stephanie Copeland
+date: 2022-03-07
+output:
+  distill::distill_article:
+    self_contained: false
+    code_folding: hide
+---
+
+```{r setup, include=TRUE, warning = FALSE, message=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+library(tidyverse)
+library(ggpubr)
+library(ggplot2)
+library(ggfortify)
+library(datasets)
+data("airquality")
+
+```
+
+### Post
+
+R-studio comes with a pre-loaded dataset called `airquality` which is a set of air quality measurements taken from New York City over the months of May to July. While this dataset is unfortunately not the most expansive, it does allow the exploration via a Principle Coordinate Analysis (PCA) into the correlation between air quality variables. Should a more rigorous dataset of air quality measurements be taken from NYC, this PCA could provide initial predictions as to what variables of air quality may be correlated or uncorrelated to each other. The results from the PCA are visualized and summarized below. 
+
+
+```{r}
+aq_clean <- airquality %>% 
+  drop_na() %>% 
+  janitor::clean_names()
+```
+
+```{r}
+aq_pca <- aq_clean %>% 
+  select(ozone, solar_r, wind, temp) %>% 
+  scale() %>% 
+  prcomp()
+
+#aq_pca$rotation
+```
+```{r}
+
+#autoplot(aq_pca,
+     #	data = aq_clean,
+     #	loadings = TRUE,
+     #	loadings.label = TRUE,
+    # 	loadings.colour = "black",
+     #	loadings.label.colour = "blue",
+     #	loadings.label.vjust = -0.5
+     #	) +
+ # theme_minimal()
+
+```
+
+```{r}
+labels <- c(ozone = "Ozone", solar_r = "Solar Radiation", wind = "Wind", temp = "Temperature")
+
+loadings_df <- data.frame(aq_pca$rotation) %>%
+  mutate(axis = row.names(.))
+ 
+new_pts_df <- data.frame(aq_pca$x)
+ 
+ggplot() +
+  geom_point(data = new_pts_df, aes(x = PC1, y = PC2), color = 'deepskyblue2', alpha = .50, size = 2.5) +
+  geom_segment(data = loadings_df,
+               x = 0, y = 0, aes(xend = PC1, yend = PC2, group = axis),
+               arrow = arrow(length = unit(.35, 'cm'))) +
+  geom_text(data = loadings_df,
+            aes(x = PC1, y = PC2, label = labels), vjust = 0, hjust = .2, nudge_y = 0.1) +
+  theme_minimal()
+
+```
+*Figure 1:* Principle components analysis of the `airquality` dataset. The PCA contains for airquality variables - `Wind`, `Solar Radiation`, `Temperature`, and `Ozone Level`. 
+
+Temperature and Ozone levels are very positively correlated, so much so that the variable arrows overlap each other. This is expected as it's known that when the temperature increases so does the Ozone level. NYC has particularly hot and humid days when the city will issue warnings for those in particularly sensitive groups to avoid the outside air and stay inside. Temperature and Ozone Level have a negative correlation to wind. It tends to be windier in NYC in the winter time when temperatures are colder and there is a lower ozone layer. Finally, Solar Radiation is correlated with neither wind nor Ozone and Temperature. If another variable was to be included in this PCA (say cloud-cover measurements) then perhaps, there would be a correlation to Solar Radiation. 
+
+
+
+
+
+

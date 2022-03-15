@@ -11,6 +11,8 @@ output:
 site: distill::distill_website
 ---
  
+(She/Her/Hers)
+
 I am a graduate student in the Ecology, Evolution, and Marine Biology Department (Young Lab) at the University of California Santa Barbara. I am currently interested in understanding anthropogenic impacts to landscapes and the subsequent responses of vectors and vector-borne diseases to these disturbances. I am originally from Wilmington, Delaware and received my B.S. from the University of New Hampshire. In my spare time I enjoy surfing, cycling, and walking my dog, Hugo.
 
 

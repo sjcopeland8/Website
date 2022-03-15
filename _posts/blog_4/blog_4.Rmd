@@ -1,0 +1,137 @@
+---
+title: "Neglected Tropical Diseases in the Anthropocene"
+description: |
+  Relation between Deforestation and Neglected Tropical Disease incidence in Low Income, Tropical Nations.
+author:
+  - name: Stephanie Copeland
+date: 2022-03-08
+output:
+  distill::distill_article:
+    self_contained: false
+    code_folding: hide
+---
+
+```{r setup, include=TRUE, warning = FALSE, message=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+library(dplyr)
+library(ggplot2)
+library(here)
+library(tidyr)
+library(plotly)
+library(viridis)
+library(DescTools)
+```
+
+
+
+```{r}
+data1 <- read.csv("last_take.csv")
+
+data2 <- data1 %>% 
+  mutate(prop_tree_loss = (tree_cover_loss_ha/area_sqkm)) %>% 
+  mutate(prop_dalys = (dalys/population)) %>% 
+  mutate(area_ha = (area_sqkm * 100)) %>% 
+  mutate(tree_cover_loss = (tree_cover_loss_ha/area_ha)) %>% 
+  select(-prop_tree_loss) %>% 
+  select(-tree_cover_loss_ha) %>% 
+  select(-dalys)
+
+data3 <- data2 %>% 
+  mutate(logdalys = log(prop_dalys))
+
+data4 <- data3 %>% 
+  mutate(log_GDP = log(GDP_capita))
+
+data4 <- data4 %>% 
+  mutate(win_prop_tree = Winsorize(tree_cover_loss, minval = NULL, maxval = NULL, probs = c(0.00, 0.95), na.rm = TRUE, type = 9))
+
+#data4 %>% 
+ # summarize(dalys_cor = cor(logdalys, win_prop_tree, use = "complete.obs"))
+
+data5 <- data4 %>% 
+  mutate(country_income_level = 
+           case_when(GDP_capita >= 13000 ~ "high", 
+                     GDP_capita >= 4000 ~ "middle", 
+                     GDP_capita <= 4000 ~ "low"))
+
+
+```
+
+```{r}
+equLOWcountries <- c("Burundi", "Benin", "Bhangladesh", "Bolivia", "Central African Republic", "Cote d'Ivoire", "Cameroon", "Democratic Republic of Congo", "Congo", "Comoros", "Ethiopia", "Ghana", "Guinea", "Gambia", "Honduras", "Haiti", "Indonesia", "Kenya", "Cambodia", "Laos", "Liberia", "Madagascar", "Mali", "Myanmar", "Mozambique",
+"Mauritania", "Malawi", "Nigeria", "Nicaragua", "Phillipines", "Rwanda", "Senegal", "Sierra Leone", "El Salvador", "Eswatini", "Togo", "Tanzania", "Uganda", "Vietnam", "Zambia", "Zimbabwe")
+
+noneqLOWcountries <- c("AFG", "ARM", "BTN", "CPV", "EGY", "ERI", "FSM", "GNB", "IND", "KGZ", "LSO", "MAR", "MDA", "MNG", "NER", "NPL", "PAK", "PNG", "SDN", "SLB", "SSD", "STP", "SYR", "TCD", "TJK", "TLS", "TUN", "UKR", "UZB", "VUT")
+```
+
+```{r}
+data6 <- data5 %>% 
+  filter(country_income_level == "low") %>% 
+  filter(!(code %in% c(noneqLOWcountries)))
+```
+
+### Post
+
+This project was started as a final project for my fall quarter final assignment in EDS 222. The dataset collated for the visualizations below was completed in EDS 222 and includes data from the World Bank (Nation GDP per capita), the Our World in Data organization (Disability adjusted life years per country), and the Global Forest Watch (tree canopy cover loss by country). Neglected tropical diseases (NTDs) are a group of ~20 conditions. They can infect the spectra of the human population with infection typically coming from the surrounding natural environment; they account for ~17% of infectious diseases in humans. Deforestation is an anthropogenic landscape phenomenon that has affected 10% of forested areas in the last decade, with a total of 411 Mha global tree cover loss. My work in EDS 222 fit a multiple linear model regression model with an OLS fit ($$ NTD_i = \beta_0 + \beta_1Deforestation_i + \beta_2GDPcapita_i + \mu_i $$) to the full dataset and to a subset of the dataset that included only tropical, low-income nations, as these nations tend to have the highest levels of NTD incidence. Even with the data subsetted for only tropical, low-income nations, the model showed a significant relationship between GDP per capita and NTD burden (*p* = <0.001) and in insignificant relationship between the level of deforestation and the level of NTD burden within a country (*p* = 0.986). 
+
+With this data subset, I created  interactive versions of my report graph using `plotly`. 
+
+```{r}
+p <- data6 %>%
+  # Reorder countries to having big bubbles on top
+  arrange(desc(win_prop_tree)) %>%
+  mutate(country = factor(country, country)) %>% 
+  mutate(per_dalys = (prop_dalys * 100)) %>% 
+  mutate(per_tree = win_prop_tree* 100) %>% 
+  mutate(per_dalys = round(per_dalys, 2)) %>% 
+  mutate(per_tree = round(per_tree, 2)) %>% 
+  mutate(GDP_capita = round(GDP_capita, 2)) %>% 
+  mutate(text = paste("Country: ", country, "\nPopulation (M): ", population, "\n% DALYs of Population: ", per_dalys, "\nGdp per capita: ", GDP_capita, "\n % Tree Loss of Country: ", per_tree, sep="")) %>% 
+
+  ggplot(aes(x=GDP_capita, y=logdalys, color = GDP_capita, size = per_tree, text=text)) +
+    geom_point(alpha=0.7) +
+    scale_size(range = c(1.4, 19), name="% Tree Loss") +
+    scale_color_viridis(discrete=FALSE, guide=FALSE) +
+    labs(x = "GDP_capita", y = "Log(Disability Adjusted Life Years - DALYs)", 
+         caption = "Color and size indicate percent tree canopy cover loss.",
+         title = "Trends in NTD Incidence and Canopy Cover Loss in Relation \n to Country Wealth.")+
+    theme_bw() +
+    theme(legend.position="none")
+
+# turn ggplot interactive with plotly
+pp <- ggplotly(p, tooltip="text")
+pp
+```
+
+*Figure 1:* Shows the linear relationship between country GDP per capita and country DALY incidence rate attributed to NTDs. Size of the points indicates % of canopy cover loss by country and the color represents country GDP per capita level. Click on the point to get country-level data.
+
+```{r}
+p <- data6 %>%
+  # Reorder countries to having big bubbles on top
+  arrange(desc(win_prop_tree)) %>%
+  mutate(country = factor(country, country)) %>% 
+  mutate(per_dalys = (prop_dalys * 100)) %>% 
+  mutate(per_tree = win_prop_tree* 100) %>% 
+  mutate(per_dalys = round(per_dalys, 2)) %>% 
+  mutate(per_tree = round(per_tree, 2)) %>% 
+  mutate(GDP_capita = round(GDP_capita, 2)) %>% 
+  mutate(text = paste("Country: ", country, "\nPopulation (M): ", population, "\n% DALYs of Population: ", per_dalys, "\nGdp per capita: ", GDP_capita, "\n % Tree Loss of Country: ", per_tree, sep="")) %>% 
+
+  ggplot(aes(x=per_tree, y=logdalys, color = GDP_capita, size = logdalys, text=text)) +
+    geom_point(alpha=0.7) +
+    scale_size(range = c(1.4, 19), name="% Tree Loss") +
+    labs(x = "% Canopy Cover Loss", y = "Log(Disability Adjusted Life Years - DALYs)", 
+      caption = "Color and size indicate country GDP per capita.",
+      title = "Trends in NTD Incidence and Country Wealth in Relation \n to Canopy Cover Loss.")+
+    scale_color_viridis(discrete=FALSE, guide=FALSE) +
+    theme_bw() +
+    theme(legend.position="none")
+
+# turn ggplot interactive with plotly
+pp <- ggplotly(p, tooltip="text")
+pp
+```
+
+*Figure 2:* Shows the relatively random, insignificant relationship between deforestation rates by country and NTD incidence rates per country. The point color shows country GDP per capita level and point size is percent NTD incidence. Click on the point to get country-level data.
+
+**Project References** [1] WHO Health Topics (webpage) [2] Burkett-Cadena & Vittor (2018): Journal of Applied and Basic Ecology [3] Feasey et al. (2010): British Medical Bulletin [4] M. Booth (2018): Advances in Parasitology [5] Global Forest Watch (webpage) [6] C. Nunez (2019): National Geographic Society [7] Patz et al. (2004): Environmental Health Perspectives [8] Wood et al. (2017): Phil. Tran. R. Soc. B

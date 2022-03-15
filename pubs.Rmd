@@ -2,9 +2,12 @@
 title: "Publications"
 ---
 
+### 2020
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+D Orr, E Duge, **S Copeland**, Z Zilz, A Bui, C Motta, A Swei, and H Young. Context-dependent mediation of climate effects on larval tick survivorship by large herbivores in southcentral California. Submitted: Ecological Applications. (In Revision) <a href = 'TBD.pdf' target = '_blank'>PDF</a> (When it becomes available)
+
+**S Copeland**, S Sambado, D Orr, A Swei, and H Young. Large Herbivore Removal and Climatic Gradient on Tick Abundance in southcentral California. In preparation for Ecological Applications. <a href = 'TBD.pdf' target = '_blank'>PDF</a> (When it becomes available)
+
+D Orr, **S Copeland**, H Young. Four years of the Tejon Ranch Exclosure Experiment: plant, tick, and small vertebrate responses. In preparation for Ecology. <a href = 'TBD.pdf' target = '_blank'>PDF</a> (When it becomes available)
 
 

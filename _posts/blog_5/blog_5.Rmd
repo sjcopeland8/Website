@@ -1,0 +1,95 @@
+---
+title: "Anthropogenic Obstacles to Migratory Bird Populations"
+author:
+  - name: Stephanie Copeland
+date: 2022-03-14
+output:
+  distill::distill_article:
+    self_contained: false
+    code_folding: hide
+---
+
+```{r setup, include=TRUE, warning = FALSE, message=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+library(tidyverse)
+
+# Time series packages
+library(tsibble)
+library(feasts)
+library(fable)
+
+```
+
+### Post
+
+**Data Citation:**  Winger BM, Weeks BC, Farnsworth A, Jones AW, Hennen M, Willard DE (2019) Nocturnal flight-calling behaviour predicts vulnerability to artificial light in migratory birds. Proceedings of the Royal Society B 286(1900): 20190364. https://doi.org/10.1098/rspb.2019.0364
+
+**Dryad Citation:** Winger BM, Weeks BC, Farnsworth A, Jones AW, Hennen M, Willard DE (2019) Data from: Nocturnal flight-calling behaviour predicts vulnerability to artificial light in migratory birds. Dryad Digital Repository. https://doi.org/10.5061/dryad.8rr0498
+
+The data tabulates instances of birds colliding with buildings in Chicago Il, and Cleveland OH. For the analysis the data was subseted to include collision data only from Chicago. 
+
+For migratory birds, collisions with buildings may be an increasing cause of mortality along the migratory flight path. I used the data from Winger et al. to see if I could establish any increasing trends or a seasonality component to building collisions. Unfortunately the data was missing values from specific months, this could be because migration does not occur at all times of the year and therefore there was no collision incidences, or because the study did not occur for other reasons during this time and therefore there is collision data missing from the dataset. I used `tsibble::fill_gaps` to add NAs in the time areas with no values and then subsequently replaced those values with zeros, deciding to just attribute that missing data to no incidences of migratory bird collisions with buildings outside of the migratory period. 
+
+```{r}
+birds <- read_csv("Chicago_collision_data.csv") %>% 
+  janitor::clean_names() %>% 
+  filter(locality == "CHI")
+
+birds_ts <- birds %>% 
+  mutate(date = tsibble::yearmonth(date)) %>% 
+  group_by(date) %>% 
+  tally() %>% 
+  as_tsibble(key = NULL, index = date) %>% 
+  tsibble::fill_gaps()
+
+birds_ts[is.na(birds_ts)] <- 0
+  
+```
+
+
+```{r}
+ggplot(data = birds_ts, aes(x = date, y = n))+
+  geom_line()+
+  labs(y = "Reported Incidents of Bird Collisions", 
+       title = "Bird Collisions with buildings from 1976-2016")+
+  theme_bw()
+```
+*Figure 1:* Time series analysis of the full data set. It appears either a) less data was being recorded up until ~2000 or b) as the number of buildings increased in the Chicago area the more birds collided with buildings. There does seem to be a seasonality component to the data, this would make sense, given the seasonality of migration. 
+
+Because of the increased data from 2000 - 2016, I subsetted the data for this period for an additional time series graph and seasonal plot. 
+
+```{r}
+birds_2k <- birds %>% 
+  filter(date >= as.Date("2000-01-01"))
+```
+
+```{r}
+birds_2k_ts <- birds_2k %>%
+  mutate(date = tsibble::yearmonth(date)) %>% 
+  group_by(date) %>% 
+  tally() %>% 
+  as_tsibble(key = NULL, index = date) %>% 
+  tsibble::fill_gaps()
+
+birds_2k_ts[is.na(birds_2k_ts)] <- 0
+
+```
+
+```{r}
+ggplot(data = birds_2k_ts, aes(x = date, y = n))+
+  geom_line()+
+  labs(y = "Bird Collisions with buildings in Chicago from 2000 - 2016")+
+  theme_bw()
+```
+
+*Figure 2:* Times series analysis for the years 2000 through 2016. A much more obvious seasonal component with a smaller set of data. There seems to be less of a trend in increasing bird collisions and more of a peak in collisions occuring for some reason in ~2014. 
+
+```{r}
+birds_2k_ts %>% 
+  gg_season(y = n) +
+  theme_minimal() +
+  labs(y = "Bird Collisions with Buildlings",
+       title = "Season Plot of Building Strikes by Birds")
+```
+
+*Figure 3:* Shows a migrational component of bird collisions with incidents increasing in the fall and spring when trans-continental migration is occuring. 

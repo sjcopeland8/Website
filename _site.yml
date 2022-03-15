@@ -13,4 +13,6 @@ navbar:
       href: pubs.html
     - text: "Blog"      # add
       href: blog.html   # add
+    - text: "CV"
+      href: CV.html
 output: distill::distill_article
